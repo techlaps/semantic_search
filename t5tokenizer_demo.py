@@ -14,8 +14,8 @@ tokenizer = T5Tokenizer.from_pretrained("models/sentence-t5-base")
 
 text = "I live in New York. " + \
 "Karthik planning to visit USA. " + \
-"Karthik hates the New Burgers city. " + \
-"New York is a beautiful city."
+"He hates the New York city. " + \
+"New York is a beautiful city. Karthik lives in Chennai, India."
 
 tokens = tokenizer.tokenize(text)
 print(tokens)
@@ -45,17 +45,17 @@ for i in range(4):
 t.build(10) # 10 trees
 t.save('test.ann')
 
-query = "Karthik not planning to visit USA"
+query = "Karthik is not planning to visit USA"
 query_v = model.encode([query])
 #print(query_v)
 
 u = AnnoyIndex(f, 'angular')
 u.load('test.ann') # super fast, will just mmap the file
-print(u.get_nns_by_item(3, 3, include_distances=True)) # will find the n no. of nearest neighbors
+#print(u.get_nns_by_item(3, 2, include_distances=True)) # will find the n no. of nearest neighbors
 
 print(dir(u))
-print(u.get_nns_by_vector(query_v[0], 3, include_distances=True))
+print(u.get_nns_by_vector(query_v[0], 2, include_distances=True))
 
-print(u.get_distance(2, 3))
+#print(u.get_distance(2, 3))
 
 print(u.get_n_trees())
